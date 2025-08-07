@@ -31,8 +31,8 @@ jobs:
           BASE_REF="${{ github.event.pull_request.base.ref }}"
           HEAD_REF="${{ github.event.pull_request.head.ref }}"
 
-          # If PR head is main, use master for base
-          if [ "$HEAD_REF" = "main" ]; then
+          # If PR base is main, use master for base
+          if [ "$BASE_REF" = "main" ]; then
             BASE_REF="master"
           fi
 
@@ -48,8 +48,8 @@ jobs:
         run: |
           # Run the contentful merge show command and capture output
           OUTPUT=$(contentful merge show \
-            --se ${{ steps.pr-refs.outputs.base_ref }} \
-            --te ${{ steps.pr-refs.outputs.head_ref }} \
+            --se ${{ steps.pr-refs.outputs.head_ref }} \
+            --te ${{ steps.pr-refs.outputs.base_ref }} \
             --space-id ${{ secrets.CONTENTFUL_SPACE_ID }} \
             --management-token ${{ secrets.CONTENTFUL_MANAGEMENT_TOKEN }} \
             -y \
