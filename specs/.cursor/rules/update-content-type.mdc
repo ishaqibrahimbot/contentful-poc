@@ -1,0 +1,14 @@
+---
+description: guidelines on contentful mcp tool usage
+alwaysApply: false
+---
+
+This rule outlines how to run a "Content Model Create/Update Workflow"
+
+- check all staged files inside the specs/ folder
+- Find any new files that have been created
+- every file represents a content model in contentful
+- use the create_content_type tool to create a content type based on each spec file
+- to create a content type using the create_content_type tool, first prepare the payload config object by reviewing the spec. IMPORTANT: make sure to follow the spec exactly!
+- once the content type has been created, publish the content type using the publish_content_type tool
+- finally, use the get_content_type tool to fetch the created content type and verify that it was created successfully. verify by comparing the output of the get_content_type tool with what the spec says.
