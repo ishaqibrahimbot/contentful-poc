@@ -28,8 +28,20 @@ jobs:
       - name: Get PR base and head refs
         id: pr-refs
         run: |
-          echo "base_ref=${{ github.event.pull_request.base.ref }}" >> $GITHUB_OUTPUT
-          echo "head_ref=${{ github.event.pull_request.head.ref }}" >> $GITHUB_OUTPUT
+          BASE_REF="${{ github.event.pull_request.base.ref }}"
+          HEAD_REF="${{ github.event.pull_request.head.ref }}"
+
+          # If PR head is main, use master for base
+          if [ "$HEAD_REF" = "main" ]; then
+            BASE_REF="master"
+          fi
+
+          # Replace "/" with "-" in branch names
+          BASE_REF_CLEAN=$(echo "$BASE_REF" | sed 's/\//-/g')
+          HEAD_REF_CLEAN=$(echo "$HEAD_REF" | sed 's/\//-/g')
+
+          echo "base_ref=$BASE_REF_CLEAN" >> $GITHUB_OUTPUT
+          echo "head_ref=$HEAD_REF_CLEAN" >> $GITHUB_OUTPUT
 
       - name: Run Contentful merge diff
         id: merge-diff
