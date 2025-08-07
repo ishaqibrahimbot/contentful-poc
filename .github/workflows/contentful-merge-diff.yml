@@ -28,8 +28,8 @@ jobs:
       - name: Get PR base and head refs
         id: pr-refs
         run: |
-          echo "base_ref=${{ github.event.pull_request.base.sha }}" >> $GITHUB_OUTPUT
-          echo "head_ref=${{ github.event.pull_request.head.sha }}" >> $GITHUB_OUTPUT
+          echo "base_ref=${{ github.event.pull_request.base.ref }}" >> $GITHUB_OUTPUT
+          echo "head_ref=${{ github.event.pull_request.head.ref }}" >> $GITHUB_OUTPUT
 
       - name: Run Contentful merge diff
         id: merge-diff
@@ -40,6 +40,7 @@ jobs:
             --te ${{ steps.pr-refs.outputs.head_ref }} \
             --space-id ${{ secrets.CONTENTFUL_SPACE_ID }} \
             --management-token ${{ secrets.CONTENTFUL_MANAGEMENT_TOKEN }} \
+            -y \
             2>&1 || echo "Command failed with exit code $?")
 
           # Save output to a file and environment variable for the comment step
