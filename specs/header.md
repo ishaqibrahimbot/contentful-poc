@@ -11,4 +11,3 @@ Description: Stores information and assets associated with the site's header e.g
 2. Search placeholder
    id: searchPlaceholder
    type: symbol
-   required
