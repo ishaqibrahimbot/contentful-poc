@@ -83,6 +83,15 @@ jobs:
           echo "$OUTPUT" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
+      - name: Clean up temporary environment
+        if: success()
+        run: |
+          # Delete the temporary head environment after successful migration
+          contentful space environment delete \
+            --environment-id ${{ steps.pr-refs.outputs.head_ref }} \
+            --space-id ${{ secrets.CONTENTFUL_SPACE_ID }} \
+            --management-token ${{ secrets.CONTENTFUL_MANAGEMENT_TOKEN }}
+
       - name: Comment PR with migration results
         uses: actions/github-script@v7
         with:
