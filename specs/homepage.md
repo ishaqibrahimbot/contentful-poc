@@ -11,5 +11,5 @@ Description: Stores all the content blocks that are rendered on the homepage of 
 2. Call to Action
    id: callToAction
    type: Symbol (short text)
-   required
    localised
+   validation: not more than 20 characters
